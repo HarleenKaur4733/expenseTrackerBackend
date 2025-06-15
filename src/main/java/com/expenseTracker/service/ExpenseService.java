@@ -36,4 +36,12 @@ public class ExpenseService {
 	public List<Expense> findByDateBetween(LocalDate fromDate, LocalDate toDate){
 		return expenseRepo.findByDateBetween(fromDate, toDate);
 	}
+	
+	public Expense getExpenseById(int id) {
+		return expenseRepo.findById(id).get();
+	}
+	
+	public void deleteExpense(int id) {
+		expenseRepo.deleteById(id);
+	}
 }

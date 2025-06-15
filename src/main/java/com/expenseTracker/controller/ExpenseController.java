@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -63,7 +64,21 @@ public class ExpenseController {
 	public ModelAndView getDateWiseExpense(@ModelAttribute FilterDate filterDate) {
 		List<Expense> expenseList = expenseService.findByDateBetween(filterDate.getFromDate(), filterDate.getToDate());
 		return new ModelAndView("filterExpense", "expenseFilterList", expenseList);
+
+	}
+
+	@GetMapping("/editExpense/{id}")
+	public ModelAndView editExpense(@PathVariable int id) {
+		Expense expense = expenseService.getExpenseById(id);
+		return new ModelAndView("editExpense", "expense", expense);
+
+	}
 	
+	@GetMapping("/deleteExpense/{id}")
+	public String deleteExpense(@PathVariable int id) {
+		Expense expense = expenseService.getExpenseById(id);
+		expenseService.deleteExpense(id);
+		return "redirect:/viewExpenses";
 	}
 
 }
