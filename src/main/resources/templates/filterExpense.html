@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+	<form th:action="@{/getDateWiseExpense}" 
+		method="post" th:object = "${filterDate}">
+		<div class="mb-3">
+			<label for="date" class="form-label">From Date</label> <input
+				type="date" class="form-control" th:field="*{fromDate}" required> <label for="date"
+				class="form-label">To Date</label> <input type="date"
+				class="form-control" th:field="*{toDate}" required>
+		</div>
+		 <button type="submit" class="btn btn-primary">Show Expense</button>
+	</form>
+	
+	<table class="table">
+		<thead>
+			<tr>
+				<th scope="col">Title</th>
+				<th scope="col">Amount</th>
+				<th scope="col">Date</th>
+				<th scope="col">Category</th>
+				<th scope="col">Note</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="expense : ${expenseFilterList}">
+				<td th:text="${expense.title}">Title</td>
+				<td th:text="${expense.amount}">0.00</td>
+				<td th:text="${expense.date}">2025-06-11</td>
+				<td th:text="${expense.category}">Category</td>
+				<td th:text="${expense.note}">Note</td>
+			</tr>
+		</tbody>
+	</table>
+</body>
+</html>
