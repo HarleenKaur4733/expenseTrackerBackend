@@ -44,4 +44,17 @@ public class ExpenseService {
 	public void deleteExpense(int id) {
 		expenseRepo.deleteById(id);
 	}
+	public List<Expense> searchByTitleOrNote(String keyword){
+		return expenseRepo.findByTitleContainingIgnoreCaseOrNoteContainingIgnoreCase(keyword, keyword);
+	}
+
+	public double getTotalByTitleOrNote(String keyword) {
+		List<Expense> results = expenseRepo.findByTitleContainingIgnoreCaseOrNoteContainingIgnoreCase(keyword, keyword);
+		double sum = 0;
+		for(int i = 0; i < results.size(); i++) {
+			sum += results.get(i).getAmount();
+		}
+		return sum;
+		
+	}
 }

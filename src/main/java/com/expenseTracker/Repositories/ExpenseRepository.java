@@ -9,9 +9,13 @@ import org.springframework.stereotype.Repository;
 
 import com.expenseTracker.entities.Expense;
 import java.util.Date;
+
 @Repository
 public interface ExpenseRepository extends JpaRepository<Expense, Integer>{
 	List<Expense> findByDateBetween(LocalDate fromDate, LocalDate toDate);
+	
+	List<Expense> findByTitleContainingIgnoreCaseOrNoteContainingIgnoreCase(String titleKeyword, String noteKeyword);
+
 }
 
 //Spring Data JPA uses method name conventions to derive the query. It breaks findByDateBetween down as:

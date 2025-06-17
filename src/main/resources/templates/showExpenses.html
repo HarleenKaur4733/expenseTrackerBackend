@@ -1,68 +1,89 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>All Expenses</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            background-color: #f8f9fa;
-        }
-        .container {
-            margin-top: 40px;
-        }
-        .table {
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-        }
-        h4 {
-            margin-top: 20px;
-            font-weight: 600;
-        }
-        .action-icons a {
-            margin: 0 6px;
-            color: #0d6efd;
-            text-decoration: none;
-        }
-        .action-icons a:hover {
-            opacity: 0.8;
-        }
-    </style>
+<meta charset="UTF-8">
+<title>All Expenses</title>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+	rel="stylesheet">
+<style>
+body {
+	background-color: #f8f9fa;
+}
+
+.container {
+	margin-top: 40px;
+}
+
+.table {
+	border-radius: 12px;
+	overflow: hidden;
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+h4 {
+	margin-top: 20px;
+	font-weight: 600;
+}
+
+.action-icons a {
+	margin: 0 6px;
+	color: #0d6efd;
+	text-decoration: none;
+}
+
+.action-icons a:hover {
+	opacity: 0.8;
+}
+</style>
 </head>
 <body>
 
-<div class="container">
-    <h2 class="text-center mb-4">💼 All Expenses</h2>
+	<div class="container">
 
-    <table class="table table-striped table-bordered align-middle text-center">
-        <thead class="table-dark">
-            <tr>
-                <th>Title</th>
-                <th>Amount (₹)</th>
-                <th>Date</th>
-                <th>Category</th>
-                <th>Note</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="expense : ${expenseList}">
-                <td th:text="${expense.title}">Title</td>
-                <td th:text="${expense.amount}">0.00</td>
-                <td th:text="${expense.date}">2025-06-11</td>
-                <td th:text="${expense.category}">Category</td>
-                <td th:text="${expense.note}">Note</td>
-                <td class="action-icons">
-                    <a th:href="@{/editExpense/{id}(id=${expense.id})}" title="Edit">&#9998;</a>
-                    <a th:href="@{/deleteExpense/{id}(id=${expense.id})}" title="Delete" onclick="return confirm('Are you sure you want to delete this expense?');">&#128465;</a>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+		<form th:action="@{/searchExpense}" method="get" class="mb-4">
+			<div class="input-group">
+				<input type="text" name="keyword" class="form-control"
+					placeholder="🔍 Search by title or note..." />
+				<button class="btn btn-outline-secondary" type="submit">Search</button>
+			</div>
+		</form>
 
-    <h4 class="text-end">Total Expense: ₹<span th:text="${totalExpense}">0.0</span></h4>
-</div>
+		<h2 class="text-center mb-4">💼 All Expenses</h2>
+
+		<table
+			class="table table-striped table-bordered align-middle text-center">
+			<thead class="table-dark">
+				<tr>
+					<th>Title</th>
+					<th>Amount (₹)</th>
+					<th>Date</th>
+					<th>Category</th>
+					<th>Note</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="expense : ${expenseList}">
+					<td th:text="${expense.title}">Title</td>
+					<td th:text="${expense.amount}">0.00</td>
+					<td th:text="${expense.date}">2025-06-11</td>
+					<td th:text="${expense.category}">Category</td>
+					<td th:text="${expense.note}">Note</td>
+					<td class="action-icons"><a
+						th:href="@{/editExpense/{id}(id=${expense.id})}" title="Edit">&#9998;</a>
+						<a th:href="@{/deleteExpense/{id}(id=${expense.id})}"
+						title="Delete"
+						onclick="return confirm('Are you sure you want to delete this expense?');">&#128465;</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<h4 class="text-end">
+			Total Expense: ₹<span th:text="${totalExpense}">0.0</span>
+		</h4>
+	</div>
 
 </body>
 </html>

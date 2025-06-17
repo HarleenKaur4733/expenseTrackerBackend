@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.expenseTracker.DTO.FilterDate;
@@ -79,6 +80,16 @@ public class ExpenseController {
 		Expense expense = expenseService.getExpenseById(id);
 		expenseService.deleteExpense(id);
 		return "redirect:/viewExpenses";
+	}
+	
+	@GetMapping("/searchExpense")
+	public ModelAndView searchExpense(@RequestParam("keyword") String keyword) {
+		List<Expense> results = expenseService.searchByTitleOrNote(keyword);
+		double totalResult = expenseService.getTotalByTitleOrNote(keyword);
+		ModelAndView mv = new ModelAndView("showExpenses");
+		mv.addObject("expenseList", results);
+		mv.addObject("totalExpense", totalResult);
+		return mv;
 	}
 
 }
