@@ -77,3 +77,37 @@ This helps load large expense lists in chunks, improving performance.
 ---
 
 
+### ❓ **Q: What does the `@ResponseBody` annotation do in Spring Boot, and when should it be used?**
+
+**A:** The `@ResponseBody` annotation tells Spring to write the return value of a method directly to the HTTP response body, instead of resolving it as a view name.
+
+It is typically used in REST APIs to return JSON or plain text. For example:
+
+```java
+@GetMapping("/api/message")
+@ResponseBody
+public String getMessage() {
+    return "Hello, World!";
+}
+```
+
+Alternatively, with `@RestController` (which includes `@ResponseBody` by default):
+
+```java
+@RestController
+public class ApiController {
+
+    @GetMapping("/api/data")
+    public Expense getExpense() {
+        return new Expense("Food", 250);
+    }
+}
+```
+
+Use `@ResponseBody` when:
+
+* You’re returning data, not rendering a view.
+* You want Spring to automatically serialize objects (e.g., to JSON or XML).
+
+
+
