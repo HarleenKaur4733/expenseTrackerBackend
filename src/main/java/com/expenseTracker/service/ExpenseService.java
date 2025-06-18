@@ -1,6 +1,8 @@
 package com.expenseTracker.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.expenseTracker.Repositories.ExpenseRepository;
@@ -54,7 +56,11 @@ public class ExpenseService {
 		for(int i = 0; i < results.size(); i++) {
 			sum += results.get(i).getAmount();
 		}
-		return sum;
-		
+		return sum;	
 	}
+	
+	public Page<Expense> findPaginatedExpenses(int page, int size) {
+	    return expenseRepo.findAll(PageRequest.of(page, size));
+	}
+
 }
